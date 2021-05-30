@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}All Categorys{% endblock  %}
+{% block style %}{% endblock  %}
+{% block profile %}
+		<div class="fh5co-bio">
+        
+        </div>
+{% endblock  %}
+
+{% block content %}
+ <div class="container">
+   {% if request.user.is_authenticated %} 
+        {% if request.user.is_staff or request.user.is_superuser %}
+        <h3 style="text-align:right"><a href="{% url 'addcategory' %}" class="btn btn-sm btn-success">Add New Category</i></a></h3> 
+        {% endif %}
+   {% endif %}
+   
+    
+        <table class="table table-striped">
+            <tr>
+                <th>Category</th>
+
+                   {% if request.user.is_authenticated %} 
+                        {% if request.user.is_staff or request.user.is_superuser %}
+                        <th style="text-align:center">Action</th>
+                        {% endif %}
+                    {% endif %}
+
+                
+            <tr>
+            
+            {% for p in category %}
+                <tr>
+                <td><a href="{% url 'topic' name=p.name %}" target="_blank">{{p.name}}</a></td>
+                   {% if request.user.is_authenticated %} 
+                        {% if request.user.is_staff or request.user.is_superuser %}
+                            <td style="text-align:center">
+                            <a href="{% url 'delectcat' id=p.id %}"  class="btn btn-sm btn-danger" id="delete"><i class="far fa-trash-alt "></i></a>
+                                <a href="#" class="btn btn-sm btn-success"><i class="fas fa-edit"></i></a>
+
+                            </td> 
+                        {% endif %}
+                    {% endif %}
+            <tr>
+            {% empty %}
+            <tr>
+                <td colspan="50"><h4 class="text-danger" style="text-align:center">You Have No Article Please Post a Article</h4></td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+
+{% endblock  %}
+{% block script %}
+<script>
+{% if messages %}
+    {% for message in messages %}
+        swal({
+        title: "{{ message }}",
+        icon: "success",
+        button: "OK",
+        });
+    {% endfor %}
+{% endif %}
+
+ $("#delete").click(function(e){
+    e.preventDefault();
+    const url = $(this).attr('href');
+    swal({
+        title: 'Are you sure?',
+        text: 'This record and it`s details will be permanantly deleted!',
+        icon: 'warning',
+        buttons: ["Cancel", "Yes!"],
+    }).then(function(value) {
+        if (value) {
+            window.location.href = url;
+        }
+    });
+
+});
+
+</script>
+{% endblock  %}

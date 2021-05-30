@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Welcome To {{cat}} Category {% endblock  %}
+{% block content %}
+
+<!--Header END-->
+	<div class="container-fluid">
+    <h3 class="container" >Category: {{cat}}</h3>
+		<div class="row fh5co-post-entry">
+            {% for p in post %}
+                <article class="col-lg-3 col-md-3 col-sm-3 col-xs-6 col-xxs-12 animate-box">
+                            <figure>
+                                <a href=" {% url 'single_post' id=p.id %} "><img src="{{p.image.url}}" alt="Image" class="img-responsive"></a>
+                            </figure>
+                            <span class="fh5co-meta"><a href="{% url 'topic' name=p.category.name %}">{{ p.category.name }}</a></span>
+                            <h2 class="fh5co-article-title"><a href=" {% url 'single_post' id=p.id %} ">{{ p.title}}</a></h2>
+                            <h4 class="fh5co-meta fh5co-date"><a href="{% url 'author' name=p.article_author.name.username %}">{{ p.article_author.name.get_full_name }} </a></h4>
+                            <span class="fh5co-meta fh5co-date">{{ p.created_at}}</span>
+                        </article>
+                        <div id="clearfix"></div>
+                        {% empty %}
+                         <h2 class="fh5co-article-title">No Post found in this category</h2>
+            {% endfor %}
+			<div class="clearfix visible-xs-block"></div>
+        </div>
+	</div>
+    
+{% endblock  %}

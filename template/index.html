@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Welcome To my Django Project{% endblock  %}
+{% block profile %}
+
+			
+{% endblock  %}
+{% block content %}
+	<div class="container-fluid">
+			 
+                        
+		<div class="row fh5co-post-entry">
+					{% comment %} {% if messages %}
+					<div class="messages container">
+                            {% for message in messages %}
+                            <p{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</p>
+                            {% endfor %}
+                        </div>
+                        {% endif %} {% endcomment %}
+
+					{% for p in post %}
+							<article class="col-lg-3 col-md-3 col-sm-3 col-xs-6 col-xxs-12 animate-box">
+									<figure>
+										<a href=" {% url 'single_post' id=p.id %} "><img src="{{p.image.url}}" alt="Image" class="img-responsive"></a>
+									</figure>
+									<span class="fh5co-meta"><a href="{% url 'topic' name=p.category.name %}">{{ p.category.name }}</a></span>
+									<h2 class="fh5co-article-title"><a href=" {% url 'single_post' id=p.id %} ">{{ p.title}}</a></h2>
+									<h4 class="fh5co-meta fh5co-date"><a href="{% url 'author' name=p.article_author.name.username %}">{{ p.article_author.name.get_full_name }} </a></h4>
+									<span class="fh5co-meta fh5co-date">{{ p.created_at}}</span>
+								</article>
+					{% endfor %}
+								<div class="clearfix visible-xs-block"></div>
+		</div>
+	</div>
+<div class="container">
+	<div class="pagination"">
+		<span class="step-links">
+			{% if post.has_previous %}
+				<a href="?page=1">&laquo; First</a>
+				<a href="?page={{ post.previous_page_number }}"> Previous</a>
+			{% endif %}
+
+			<span class="current">
+				Page {{ post.number }} of {{ post.paginator.num_pages }}.
+			</span>
+
+			{% if post.has_next %}
+				<a href="?page={{ post.next_page_number }}">Next </a>
+				<a href="?page={{ post.paginator.num_pages }}">Last &raquo;</a>
+			{% endif %}
+		</span>
+	</div>
+	
+</div>
+{% endblock  %}
+{% block script %}
+<script>
+{% if messages %}
+{% for message in messages %}
+    swal({
+    title: "{{ message }}",
+    icon: "success",
+    button: "OK",
+    });
+{% endfor %}
+
+{% endif %}
+
+</script>
+{% endblock  %}

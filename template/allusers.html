@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}{% endblock  %}
+{% block style %}{% endblock  %}
+{% block profile %}
+		<div class="fh5co-bio">
+        
+        </div>
+{% endblock  %}
+
+{% block content %}
+<div class="container">
+    <h3 style="text-align:right"><a href="{% url 'create' %}" class="btn btn-sm btn-success">Add New Article</i></a></h3>
+    
+        <table class="table table-striped">
+            <tr>
+                <th>{{ post }}</th>
+                <th>Title</th>
+                <th>Content</th>
+                <th>Category</th>
+                <th>Image</th>
+                <th>Action</th>
+                
+            <tr>
+            <!--
+            {% for p in post %}
+                <tr>
+                <td>{{ forloop.counter0|add:post.start_index }}</td>
+                <td>{{p.title}}</td>
+                <td>{{p.body|truncatewords:10}}</td>
+                <td>{{p.category}}</td>
+                <td><a href=" {% url 'single_post' id=p.id %} "><img src="{{p.image.url}}" alt="Image" width="60px" height="60px"></a></td>
+                <td>
+                <a href="{% url 'delete' pid=p.id %}" class="btn btn-sm btn-danger" id="edit"><i class="far fa-trash-alt "></i></a>
+                <a href="{% url 'update' pid=p.id %}" class="btn btn-sm btn-success"><i class="fas fa-edit"></i></a>
+                
+                </td> 
+            <tr>
+            {% endfor %}
+            -->
+        </table>
+    </div>
+{% endblock  %}
+{% block script %}{% endblock  %}
